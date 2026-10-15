@@ -63,7 +63,7 @@ const double PlaneVector::normSquared() const {
 }
 
 const double PlaneVector::norm() const {
-    return std::sqrt(norm());
+    return std::sqrt(normSquared());
 }
 
 PlaneVector PlaneVector::unitVector() const {
@@ -91,8 +91,8 @@ bool operator==(const PlaneVector& left, const PlaneVector& right) {
     return (left.x() == right.x()) && (left.y() == right.y());
 }
 
-std::ostream& operator<<(std::ostream& os, const PlaneVector v) {
-    os << '<' << v.x() << ", " << v.y() << ">\n";
+std::ostream& operator<<(std::ostream& os, const PlaneVector &v) {
+    os << '<' << v.x() << ", " << v.y() << '>';
     return os;
 }
 
