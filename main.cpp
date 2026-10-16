@@ -1,27 +1,27 @@
 #include <iostream>
 #include <vector>
-#include "PlaneVector.hpp"
-#include "Polygon.hpp"
-#include "SimplePolygon.hpp"
-#include "Rectangle.hpp"
+#include "Square.hpp"
+#include "Circle.hpp"
+#include "Triangle.hpp"
 
-int main() {
-    std::vector<PlaneVector> verts {
-        PlaneVector::fromXY(1, 1),
-        PlaneVector::fromXY(0, 0),
-        PlaneVector::fromXY(1, 0),
-        PlaneVector::fromXY(0, 1),
-    };
+int main()
+{
 
-    // SimplePolygon p {verts};
-    // std::cout << p.area() << '\n';
-    // std::cout << p.perimeter() << '\n';
+    Polygon p{
+        {
+            PlaneVector::fromXY(1, 1),
+            PlaneVector::fromXY(0, 0),
+            PlaneVector::fromXY(1, 0),
+            PlaneVector::fromXY(0, 1),
+        }};
+    
+    std::cout << p << '\n';
 
-    Rectangle p {1, 1, 3, 4};
-    std::cout << p.area() << '\n';
-    std::cout << p.perimeter() << '\n';
+    Rectangle r = Rectangle::fromCenter(2., 2., 10, 10);
+    std::cout << r;
 
-    //std::cout << p << '\n';
+    Circle c = Circle{0., 1., 4.};
+    std::cout << c;
 
     return 0;
 }

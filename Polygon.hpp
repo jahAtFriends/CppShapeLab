@@ -15,9 +15,9 @@ private:
 
 public:
     Polygon(const std::vector<PlaneVector> verts);
-    double perimeter() const override;
-    PlaneVector center() const override;
-    double area() const override;
+    const double perimeter() const override;
+    const PlaneVector center() const override;
+    const double area() const override;
     friend std::ostream &operator<<(std::ostream &os, const Polygon &p);
 };
 

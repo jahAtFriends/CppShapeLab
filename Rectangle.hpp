@@ -15,6 +15,14 @@ public:
     {
     }
 
+    const double area() const override {
+        return width * height;
+    }
+
+    const double perimeter() const override {
+        return 2 * width + 2 * height;
+    }
+
     static Rectangle fromCenter(const double& cx, const double& cy, const double& w, const double& h);
 };
 

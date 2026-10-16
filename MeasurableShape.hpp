@@ -5,9 +5,9 @@
 
 class MeasurableShape {
 public:
-    virtual double perimeter() const = 0;
-    virtual PlaneVector center() const = 0;
-    virtual double area() const = 0;
+    virtual const double perimeter() const = 0;
+    virtual const PlaneVector center() const = 0;
+    virtual const double area() const = 0;
 
     virtual ~MeasurableShape() = default;
 };
