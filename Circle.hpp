@@ -1,27 +1,30 @@
 #ifndef CIRCLE_HPP
-#define CIRCLE_PP
+#define CIRCLE_HPP
 
 #include "MeasurableShape.hpp"
-#include <iostream>
+#include <iosfwd>
+#include <cmath>
 
-class Circle : public MeasurableShape {
+class Circle final : public MeasurableShape {
 private:
     PlaneVector m_center;
     double      m_r;
 
 public:
-    Circle(const double& x, const double& y, const double& r)
+    Circle(double x, double y, double r)
         : m_center{PlaneVector::fromXY(x,y)}
-        , m_r{r}
-    { 
+        , m_r{std::abs(r)}
+    {
     }
 
-    const double perimeter()        const override;
-    const double area()             const override;
-    const PlaneVector center()      const override;
-    const double circumference()    const;
+    double perimeter()        const override;
+    double area()             const override;
+    PlaneVector center()      const override;
+    double circumference()    const;
 
-    friend std::ostream& operator<<(std::ostream& os, const Circle& c);
+    void print(std::ostream& os) const override;
+
+    //friend std::ostream& operator<<(std::ostream& os, const Circle& c);
 };
 
 #endif

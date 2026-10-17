@@ -14,7 +14,7 @@ public:
     const S& first() const;
     const T& second() const;
 
-    Pair<S,T> transpose() const;
+    Pair<T, S> transpose() const;
 };
 
 #include "Pair.tpp"

@@ -2,28 +2,29 @@
 #define RECTANGLE_HPP
 
 #include "SimplePolygon.hpp"
+#include <cmath>
 
 class Rectangle : public SimplePolygon {
 private:
-    const double height;
-    const double width;
-    static std::vector<PlaneVector> getVertsFromDims(const double& x, const double& y, const double& width, const double& height);
+    double m_height;
+    double m_width;
+    static std::vector<PlaneVector> getVertsFromDims(double x, double y, double width, double height);
 public:
-    Rectangle(const double& x, const double& y, const double& width, const double& height)
+    Rectangle(double x, double y, double width, double height)
         : SimplePolygon(getVertsFromDims(x, y, width, height))
-        , height{height}, width{width}
+        , m_height{std::abs(height)}, m_width{std::abs(width)}
     {
     }
 
-    const double area() const override {
-        return width * height;
+    double area() const override {
+        return m_width * m_height;
     }
 
-    const double perimeter() const override {
-        return 2 * width + 2 * height;
+    double perimeter() const override {
+        return 2 * m_width + 2 * m_height;
     }
 
-    static Rectangle fromCenter(const double& cx, const double& cy, const double& w, const double& h);
+    static Rectangle fromCenter(double cx, double cy, double w, double h);
 };
 
 #endif

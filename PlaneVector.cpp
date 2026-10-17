@@ -1,105 +1,42 @@
 #include "PlaneVector.hpp"
+
 #include <cmath>
-#include <iostream>
+#include <ostream>
 
+// These functions need <cmath>, whose functions aren't constexpr until
+// C++26, so they're defined here and not inline in the header.
 
-
-PlaneVector::PlaneVector(const double& x, const double& y) 
-    :m_components{Pair<double, double>{x, y}}
-{
-}
-
-PlaneVector PlaneVector::fromXY(const double& x, const double& y) {
-    return PlaneVector{x, y};
-}
-
-PlaneVector PlaneVector::fromPolar(const double& r, const double& theta) {
+PlaneVector PlaneVector::fromPolar(double r, double theta) {
     return PlaneVector{r * std::cos(theta), r * std::sin(theta)};
 }
 
-const PlaneVector& PlaneVector::ZERO() {
-    static const PlaneVector zero_instance{0, 0};
-    return zero_instance;
-}
-
-const double& PlaneVector::x() const {
-    return m_components.first();
-}
-
-const double& PlaneVector::y() const {
-    return m_components.second();
-}
-
-const double PlaneVector::r() const {
-    return norm();
-}
-
-const double PlaneVector::theta() const {
-    if (*this == ZERO()) {
-        return 0;
+double PlaneVector::theta() const {
+    // Avoid atan2(0, -0) = pi
+    if (*this == ZERO) {
+        return 0.0;
     }
-
-    return std::atan2(y(), x());
+    return std::atan2(m_y, m_x);
 }
 
-PlaneVector PlaneVector::plus(const PlaneVector& that) const {
-    return fromXY(x() + that.x(), y() + that.y());
-}
-
-PlaneVector PlaneVector::minus(const PlaneVector& that) const {
-    return fromXY(x() - that.x(), y() - that.y());
-}
-
-const double PlaneVector::dot(const PlaneVector& that) const {
-    return x() * that.x() + y() * that.y();
-}
-
-PlaneVector PlaneVector::scl(double& scl) const {
-    return fromXY(scl * x(), scl * y());
-}
-
-const double PlaneVector::normSquared() const {
-    return x() * x() + y() * y();
-}
-
-const double PlaneVector::norm() const {
+double PlaneVector::norm() const {
     return std::sqrt(normSquared());
 }
 
 PlaneVector PlaneVector::unitVector() const {
-    if (*this == ZERO()) {
-        return ZERO();
+    if (*this == ZERO) {
+        return ZERO;
     }
-
-    double scaleFactor = 1.0 / norm();
-    return scl(scaleFactor);
+    return *this / norm();
 }
 
-const double PlaneVector::cross(const PlaneVector& that) const {
-    return x() * that.y() - y() * that.x();
+PlaneVector PlaneVector::rotate(double alpha) const {
+    // Apply the rotation matrix directly. Going through polar form instead
+    // would cost a sqrt and an atan2 and would lose precision.
+    const double c = std::cos(alpha);
+    const double s = std::sin(alpha);
+    return PlaneVector{c * m_x - s * m_y, s * m_x + c * m_y};
 }
 
-PlaneVector PlaneVector::rotate(const double& alpha) const {
-    if (*this == ZERO()) {
-        return ZERO();
-    }
-
-    return fromPolar(r(), theta() + alpha);
-}
-
-bool operator==(const PlaneVector& left, const PlaneVector& right) {
-    return (left.x() == right.x()) && (left.y() == right.y());
-}
-
-std::ostream& operator<<(std::ostream& os, const PlaneVector &v) {
-    os << '<' << v.x() << ", " << v.y() << '>';
-    return os;
-}
-
-PlaneVector PlaneVector::operator+(const PlaneVector& that) const {
-    return this->plus(that);
-}
-
-PlaneVector PlaneVector::operator-(const PlaneVector& that) const {
-    return this->minus(that);
+std::ostream& operator<<(std::ostream& os, const PlaneVector& v) {
+    return os << '<' << v.x() << ", " << v.y() << '>';
 }

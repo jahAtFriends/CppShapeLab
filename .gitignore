@@ -1,9 +1,2 @@
-#Ignore everything
-*
-# Whitelist all directories so Git can scan them
-!*/
-# Whitelist all files that have an extension
-!*.*
-# Exclude the VS Code settings directory
+build/
 .vscode/
-

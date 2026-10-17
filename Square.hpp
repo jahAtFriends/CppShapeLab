@@ -3,14 +3,14 @@
 
 #include "Rectangle.hpp"
 
-class Square : public Rectangle {
+class Square final : public Rectangle {
 public:
-    Square(const double& x, const double& y, const double& l)
+    Square(double x, double y, double l)
         : Rectangle(x, y, l, l)
     {
     }
 
-    static Square fromCenter(const double& x, const double& y, const double& l) {
+    static Square fromCenter(double x, double y, double l) {
         return {
             x - l / 2.,
             y - l / 2.,

@@ -3,22 +3,24 @@
 
 #include "MeasurableShape.hpp"
 #include <vector>
-#include <iostream>
+#include <iosfwd>
 #include <utility>
 
 class Polygon : public MeasurableShape
 {
 private:
-    std::vector<PlaneVector> verts{};
-    std::vector<PlaneVector> sidelengths{};
-    static const std::vector<PlaneVector> getSidesFromVerts(const std::vector<PlaneVector> verts);
+    std::vector<PlaneVector> m_verts{};
+    std::vector<PlaneVector> m_sidelengths{};
+    static std::vector<PlaneVector> getSidesFromVerts(const std::vector<PlaneVector>& verts);
 
 public:
-    Polygon(const std::vector<PlaneVector> verts);
-    const double perimeter() const override;
-    const PlaneVector center() const override;
-    const double area() const override;
-    friend std::ostream &operator<<(std::ostream &os, const Polygon &p);
+    explicit Polygon(std::vector<PlaneVector> verts);
+    double perimeter() const override;
+    PlaneVector center() const override;
+    double area() const override;
+    // friend std::ostream &operator<<(std::ostream &os, const Polygon &p);
+
+    void print(std::ostream& os) const override;
 };
 
 #endif

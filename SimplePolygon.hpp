@@ -5,7 +5,7 @@
 
 class SimplePolygon: public Polygon {
 public:
-    SimplePolygon(std::vector<PlaneVector> verts)
+    explicit SimplePolygon(std::vector<PlaneVector> verts)
         : Polygon(sortVertsCounterclockwise(std::move(verts))){}
 private:
     static std::vector<PlaneVector> sortVertsCounterclockwise(std::vector<PlaneVector> verts);

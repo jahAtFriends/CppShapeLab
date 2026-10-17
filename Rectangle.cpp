@@ -1,6 +1,6 @@
 #include "Rectangle.hpp"
 
-std::vector<PlaneVector> Rectangle::getVertsFromDims(const double& x, const double& y, const double& width, const double& height) {
+std::vector<PlaneVector> Rectangle::getVertsFromDims(double x, double y, double width, double height) {
     return {
         PlaneVector::fromXY(x, y),
         PlaneVector::fromXY(x + width, y),
@@ -9,7 +9,7 @@ std::vector<PlaneVector> Rectangle::getVertsFromDims(const double& x, const doub
     };
 }
 
-Rectangle Rectangle::fromCenter(const double& x, const double& y, const double& width, const double& height) {
+Rectangle Rectangle::fromCenter(double x, double y, double width, double height) {
     return {
         x - width / 2.,
         y - height / 2.,
